@@ -48,7 +48,7 @@ GROUP BY
 -- Average: Staff_ID 1: $4.15, Staff_ID 2: $4.25
 -- Standard Deviation is the same for both: $2.37
 
--- The standard deviation is the same, so I don't believe there's any meaningful difference between the transactions the staffers handled
+-- The standard deviation is the same as the standard deviation for all amounts, so I don't believe there's any meaningful difference between the transactions the staffers handled
 
 --------------
 
@@ -83,18 +83,33 @@ GROUP BY
 -- Don't need to be super specific about this.
 
 
-
 SELECT
 	customer_id
-	,COUNT(payment_id)
-	,ROUND(AVG(payment_id), 2) as average
-	,ROUND(STDDEV_POP(payment_id), 2) as standard_deviation
-
-FROM
-	payment
-
+	,ROUND(AVG(count),0) as average
+	,ROUND(STDDEV_POP(count),0) as standard_deviation
+FROM 
+	(SELECT
+		COUNT(payment_id)
+		,customer_id
+	FROM 
+		payment
+	GROUP BY
+		customer_id) as count
 GROUP BY
 	customer_id
 
 ORDER BY
-	4
+	3
+
+
+SELECT
+	ROUND(AVG(count),2) AS mean
+
+FROM 
+	(SELECT
+		COUNT(payment_id)
+		,customer_id
+	FROM 
+		payment
+	GROUP BY
+		customer_id) as count
