@@ -8,6 +8,21 @@
 -- in our database.
 -- Write down these numbers.
 
+SELECT 
+	ROUND(STDDEV(amount), 2) as standard_deviation
+
+FROM 
+	payment;
+
+-- $2.37
+
+SELECT 
+	ROUND(AVG(amount), 2) as average
+
+FROM 
+	payment;
+
+-- $4.20
 
 
 -- 2) Get the average purchase per employee, as well as the standard
@@ -19,7 +34,16 @@
 -- difference between the natural of transactions they handle?
 
 
+SELECT
+	ROUND(AVG(amount), 2) as average
+	,ROUND(STDDEV(amount), 2) as standard_deviation
+	,staff_id
 
+FROM
+	payment
+
+GROUP BY
+	staff_id;
 
 
 
